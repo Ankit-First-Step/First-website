@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>School Admission Form</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      /* Background changed to White */
+      background: #ffffff; 
+      color: #222;
+    }
+
+    /* Background shapes - Changed to Sky Blue tones */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4; /* Reduced opacity for white background */
+      z-index: -1;
+      animation: float 15s ease-in-out infinite alternate;
+    }
+    body::before {
+      width: 500px;
+      height: 500px;
+      background: #00b4db; /* Sky Blue */
+      top: -100px;
+      left: -150px;
+    }
+    body::after {
+      width: 600px;
+      height: 600px;
+      background: #00d2ff; /* Light Sky Blue */
+      bottom: -150px;
+      right: -200px;
+      animation-delay: 7s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(40px) translateX(30px); }
+    }
+
+    main.container {
+      max-width: 1100px;
+      margin: 60px auto 80px;
+      background: white;
+      border-radius: 30px;
+      /* Adjusted shadow for white background */
+      box-shadow: 0 20px 60px rgba(0,180,219,0.15); 
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 720px;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(40px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Left panel - Sky Blue Gradient */
+    .info-panel {
+      background: linear-gradient(135deg, #00b4db 0%, #00d2ff 100%);
+      padding: 60px 40px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+    }
+    .info-panel h1 {
+      font-size: 3.2rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .info-panel p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+    }
+
+    /* Right panel */
+    .form-panel {
+      background: #fefefe;
+      padding: 50px 60px;
+      overflow-y: auto;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    .section-title {
+      grid-column: 1 / -1;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #333;
+      border-bottom: 2px solid #00b4db; /* Sky Blue border */
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #00b4db;
+      box-shadow: 0 0 8px 2px rgba(0, 180, 219, 0.2);
+    }
+
+    /* Buttons - Sky Blue */
+    button {
+      background: linear-gradient(135deg, #00b4db 0%, #00d2ff 100%);
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 24px;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0, 180, 219, 0.3);
+      transition: all 0.4s ease;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #00d2ff 0%, #00b4db 100%);
+      box-shadow: 0 14px 28px rgba(0, 210, 255, 0.5);
+    }
+
+    button.secondary {
+      background: white;
+      border: 3px solid #00b4db;
+      color: #00b4db;
+      box-shadow: none;
+    }
+    button.secondary:hover {
+      background: #00b4db;
+      color: white;
+    }
+
+    footer a {
+      color: #00b4db;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    
+    /* ... rest of the styles (labels, grid, media queries) remain same but with blue accents ... */
+    label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px 38px; }
+    .full { grid-column: 1 / -1; }
+    .actions { grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 22px; margin-top: 10px; flex-wrap: wrap; }
+    input, select, textarea { width: 100%; padding: 14px 18px; border-radius: 14px; border: 2px solid #cbd5e1; font-family: 'Poppins', sans-serif; }
+    
+    @media (max-width: 1020px) {
+      main.container { grid-template-columns: 1fr; margin: 20px; }
+      .info-panel { border-radius: 30px 30px 0 0; }
+      .form-panel { border-radius: 0 0 30px 30px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="info-panel">
+      <h1>Welcome to Our School</h1>
+      <p>Fill out the admission form to apply. We’re excited to have you join our family.</p>
+      <div class="branding">made by Ankit Chaudhary</div>
+    </section>
+
+    <section class="form-panel">
+      <form id="admissionForm">
+        <div class="section-title">Student Details</div>
+        <div>
+          <label for="studentName">Student's Full Name *</label>
+          <input id="studentName" name="studentName" type="text" required placeholder="e.g., 
+Rohit Sharma" />
+        </div>
+        
+
+        <div>
+          <label for="dob">Date of Birth *</label>
+          <input id="dob" name="dob" type="date" required />
+        </div>
+
+        <div>
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" aria-label="Gender">
+            <option value="" selected disabled>Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="applyClass">Applying For Class *</label>
+          <select id="applyClass" name="applyClass" required>
+            <option value="" selected disabled>Select class</option>
+            <option>Nursery</option>
+            <option>KG</option>
+            <option>Class 1</option>
+            <option>Class 2</option>
+            <option>Class 3</option>
+            <option>Class 4</option>
+            <option>Class 5</option>
+            <option>Class 6</option>
+            <option>Class 7</option>
+            <option>Class 8</option>
+            <option>Class 9</option>
+            <option>Class 10</option>
+            <option>Class 11</option>
+            <option>Class 12</option>
+          </select>
+        </div>
+
+        <div class="section-title">Parent / Guardian Details</div>
+
+        <div>
+          <label for="parentName">Parent / Guardian Name *</label>
+          <input id="parentName" name="parentName" type="text" required autocomplete="name" placeholder="e.g., Shubham Sharma" />
+        </div>
+
+        <div>
+          <label for="parentPhone">Parent / Guardian Phone *</label>
+          <input id="parentPhone" name="parentPhone" type="tel" required autocomplete="tel" placeholder="+91-96198XXXXX" />
+        </div>
+
+        <div class="full">
+          <label for="email">Parent Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="parent@example.com" />
+        </div>
+
+        <div class="section-title">Additional Information</div>
+
+        <div class="full">
+          <label for="address">Address</label>
+          <textarea id="address" name="address" placeholder="Street, City, State, PIN"></textarea>
+        </div>
+
+        <div>
+          <label for="prevSchoolType">Previous School Type</label>
+          <select id="prevSchoolType" name="prevSchoolType">
+            <option value="" selected disabled>Select</option>
+            <option>Public</option>
+            <option>Private</option>
+            <option>International</option>
+            <option>Home Schooled</option>
+            <option>None</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="prevSchool">Previous School Name</label>
+          <input id="prevSchool" name="prevSchool" type="text" placeholder="Name of previous school" />
+        </div>
+
+        <div class="full">
+          <label for="subjects">Preferred Subjects / Remarks</label>
+          <textarea id="subjects" name="subjects" placeholder="Any notes or subject choices"></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="secondary" id="copyBtn" aria-label="Copy form text">Copy Form Text</button>
+          <button type="button" id="submitBtn" aria-label="Submit form">Submit</button>
+        </div>
+
+        <footer>
+          <a href="#" onclick="alert('Made by Shourya')">made by Ankit Chaudhary </a>
+        </footer>
+      </form>
+    </section>
+
+  </main>
+
+  <script>
+    const contactEmail = "chaudharyankir29@gmail.com @gmail.com";
+
+    function buildEmailBody(form) {
+      const data = new FormData(form);
+      const lines = [];
+      lines.push("----- School Admission Form -----\n");
+
+      for (const [key, value] of data.entries()) {
+        const formattedKey = key.replace(/([A-Z])/g, " $1")
+                                .replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+        lines.push(`${formattedKey}: ${value || "(not provided)"}`);
+      }
+      lines.push("\nSubmitted on: " + new Date().toLocaleString());
+      return lines.join("\n");
+    }
+
+    const form = document.getElementById('admissionForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const copyBtn = document.getElementById('copyBtn');
+
+    submitBtn.addEventListener('click', () => {
+      if (!form.reportValidity()) return;
+
+      const subject = encodeURIComponent("New Admission Form - " + (form.studentName.value || ""));
+      const body = encodeURIComponent(buildEmailBody(form));
+
+      const mailtoLink = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+      window.location.href = mailtoLink;
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!form.reportValidity()) return;
+      const text = buildEmailBody(form);
+
+      try {
+        await navigator.clipboard.writeText(text);
+        alert('Form text copied to clipboard.');
+      } catch (err) {
+        prompt('Copy the form text below:', text);
+      }
+    });
+
+    form.addEventListener('submit', e => e.preventDefault());
+  </script>
+
+</body>
+</html>
